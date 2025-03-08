@@ -1,0 +1,163 @@
+								Database
+___________________________________________________________________________________________________________________________________________
+___________________________________________________________________________________________________________________________________________|     [25/2/2025]
+
+Normal -- Traditional
+DBMS - (Ex:Foxpro, Dbase, Clipper)
+
+EF Codd - Relational theory: 12 rules
+RDBMS - is a software follows minimum two-tier architecture and follow EF Codd rules.
+SQLServer - Microsoft 
+
+	(Thin client - Fat Server)/(Fat client - Thin server)
+
+			  [MS SQL SERVER]
+			        |
+			        |
+	      ---------sql------------------sql-----
+	      |			|		   |
+	    [SSMS]	      [SSMS]             [SSMS]
+
+___________________________________________________________________________________________________________________________________________
+___________________________________________________________________________________________________________________________________________|
+
+
+ * Data will be stored in the disk as files(data file,log file){Collectiion of data file and log file is known as Database}==>{datafile(.mdf) & logfile(.ldf)}
+	Command used to create database: create database <database_name>
+
+ * System Databases-> Master, model, msdb, tempdb (Should not be used for storing data){*data should be stored in your own database}
+	
+	-Structure info is stored in the ddl section.
+	-Command to create a table: create table <table_name>(<column1><datatype>,.....)
+		> String -- char, varchar, text, nchar, nvarchar,...
+		> Date -- date, datetime, smalldatetime,longdatetime, timestamp,...
+		> Numeric -- int, smallint, tinyint, bigint, decimal, float,...
+		> Binary -- image, binary, varbinary,...
+ * If the file reaches the threshold increase the size of the datafile:
+	-Create a new data file 
+		>> Command:
+		alter database <database_name> add file(
+		name = 'name',
+		filename = 'physicalfilename',
+		size = 10,
+		maxsize=100,
+		filegrowth=1)
+
+	-Modify the datafile
+		>> Command:
+		alter database <database_name> modify file(name='name',size=10)
+
+ * To remove a file:
+	>> Command:
+	alter database <database_name> remove file <file_name>
+
+ * To create database on particular location:
+	>>Command:
+	create database <database_name>
+	on(name = 'name',
+		filename = 'physicalfilename',
+		size = 10,
+		maxsize=100,
+		filegrowth=1)
+	log on(name = 'name_log',
+		filename = 'physicalfilename',
+		size = 10,
+		maxsize=100,
+		filegrowth=1)
+
+ * To remove entire database: 
+	>>Command:
+	drop database <database_name>
+
+ * To insert values:
+	>> Command:
+	insert into <table_name>(req values) values(val1 , val2, ...)
+	select * from <table_name>  -- {to view table}
+
+___________________________________________________________________________________________________________________________________________
+___________________________________________________________________________________________________________________________________________|
+
+1) Create a table called item to store item_name, item_code, price & quantity
+
+	>>create table item (item_name varchar(15),item_code varchar(10),price int,quantity int)
+
+2) Create a table called orders to store orderid, customername, customeraddress, itemcode, quantity, price
+
+	>>create table orders(order_id varchar(10),cust_name varchar(20),cust_add varchar(20),item_code varchar(10),quantity int,price int)
+
+
+ * Normalization -- Decomposing complex table structure into simple table structure to reduce complexity
+
+ * Join -- Retrieve data from two or more tables as it is coming from one table
+	>>Syntax:
+	(i)cross join: select [table1.column1,table2.column1,....]/* from table1,table2,... --- Cartesian product
+	(ii)Equi-join: select [table1.column1,table2.column1,....]/* from table1,table2,... where/on <join_condition>
+		       select [table1.column1,table2.column1,....]/* from table1 join table2,... on <join_condition>	
+		-> And to join n tables there should be minimum n-1 join conditions required
+	(iii)Outer-join: select [table1.column1,table2.column1,....]/* from table1 full outer join table2,... on <join_condition>
+			 select [table1.column1,table2.column1,....]/* from table1 left outer join table2,... on <join_condition>
+			 select [table1.column1,table2.column1,....]/* from table1 right outer join table2,... on <join_condition>
+
+ * Data integrity -- Ensuring correctness of the data
+	>>For these we use constraints: rules imposed on column
+	1.check -- ensure that values falls into a rang, group or pattern -->Domain integrity constraint
+	2.unique -- ensure that only unique values are inserted into the columns --> entity integrity
+	3.primary key -- ensures only unique and not null values are inserted into the column --> entity integrity
+	4.foreign key -- ensures that value inserted is present in another table column --> referencial integrity
+	
+	>>Constraints can be applied in the table level and column level
+	
+	>>Constraints can be applied during table creation or after creation
+	
+	>>Syntax:  [constraint <constraint_name>] <constraint_type> [specification]
+	>>Example: create table student(id int primary key,
+		   name varchar(20),
+		   gender varchar(7) constraint chkgender check(lower(gender) in('male','female')),
+		   age tinyint check(age between 1 and 150),
+		   pincode char(6) check(pincode like '[5][0-9][0-9][0-9][0-9][0-9]'))
+	>>sp_help <table_name> -- to check for constraints in the table
+
+ * Select syntax:
+	>>select <column/expression/*> [from <table_name>]
+
+___________________________________________________________________________________________________________________________________________
+___________________________________________________________________________________________________________________________________________|     [26/2/2025]
+
+ * Functions -- Programs or block of code that takes one or more inputs and produces an output
+	      - Single row functions and Multi row functions (aggregate functions)
+
+	>>String function: Used to perform operations on strings (ex: upper,lower,substring,concat,replace(<col_val/col_name>,'<search_string>','replace_char'),replicate,ltrim,rtrim,soundex,format)
+	>>Date function:
+	>>Arithmetic function:
+	>>Conversion function:(convert, cast, parse,try_parse,try_cast)
+	>>Miscellaneous function:
+	>>Aggregate function:(avg,sum,stdev,min,max,count,rank,dense_rank)
+		-case construct ex:
+			select FirstName,MiddleName,LastName,
+			case MaritalStatus 
+			when 'M' then 'Married'
+			when 'S' then 'Single'
+			else
+			' '
+			end as status
+			from DimEmployee
+
+ * Sub-query: it is a collection of  nested select statements written inside another outer query
+ * Co-related subquery: where outer query executes first and then the inner query executes
+
+-- write a query to find highest salary of an employee based on their marital status
+>>select * from DimEmployee where baserate in (select max(baserate) from DimEmployee group by MaritalStatus)
+
+-- increase the baserate of all employees by 1 if their baserate is less than the avg rate in their gender
+>>update DimEmployee 
+  set BaseRate = (BaseRate+1)
+  where BaseRate < (select avg(baserate) from DimEmployee e2 where e2.gender=DimEmployee.Gender)
+ 
+--subquery in select list
+>>select baserate,gender,(select avg(baserate) from DimEmployee e1 where e1.gender=e2.Gender) as Average from DimEmployee e2
+
+--subquery in from clause
+>>select * from (select maritalstatus as stat, avg(baserate) as average from DimEmployee group by MaritalStatus) as Average
+
+--Arranging
+>>select FirstName,LastName,baserate,gender from DimEmployee order by Gender desc, BaseRate desc
