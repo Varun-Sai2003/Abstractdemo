@@ -1,0 +1,285 @@
+***DotNet***
+An initiative of Microsoft to solve the difficulties of n-tier application development.
+
+>>.net framework 1.0 - 4.8 : works only on windows
+
+>.Net Framework -- software that needs to be installed in development machine, tools and base class library. (windows application)
+>.Net Languages -- VB.Net, C#.Net, C++.Net, Java.Net, F#.net, etc.  (cross-platform services)
+>.Net Runtime -- needs to be installed in the target machine. It does disassembly of the assembly. (Mobile Application)
+>.Net Standard Library --
+
+		  Common infrastructure
+                            |
+	      __________________________________
+	     |              |                   |
+	<<Compilers>> <<Languages>> <<Runtime Components>>
+
+>Tools used: Visual Studio, Visual Studio cose,etc...
+
+>Components:C# code -> C# compiler -> CLS(common language specification) -> CIL(common intermediate language) -> CLR(common language runtime) -> Machine code 
+
+ABC.cpp -> compile ->  obj -> make -> executable
+C# -> compile(gives a .msil file) -> Assembly(.dll/exe) -> Target machine 
+
+MSIL/IL(Intermediate Language)/PE(Portable Executable)
+
+Manifest contain meta data is used to control the execution.
+
+ ***  For more info serach: .Net whitepaper  ***
+
+C# Language --
+It is a pure object oriented language.
+
+> A project-- collection of files(code files,cofiguration files,image, etc,..)
+> Build -- Assembly
+> Dotnet cli -- IDE, download template from cloud.
+
+
+________________________________________________________________________________________________________________________________________________________________
+
+In CMD
+>>dotnet new --list -> shows the list of applications that can be built
+>>dotnet new console -n -o  => (n is name of the file, o is the output directory)
+>>dotnet new console -n session1 -f net8.0
+>>code .
+>> >> sample prog:
+// write a prog to display first 10 numbers in a fibonacci series
+class Fib
+{
+    static void Main()
+    {
+        int a = 0;
+        int b = 1;
+        int c;
+        Console.WriteLine(a);
+        Console.WriteLine(b);
+        for (int i = 3; i <= 10; i++)
+        {
+            c = a + b;
+            Console.WriteLine(c);
+            a = b;
+            b = c;
+        }
+    }
+}
+
+Syntax to declare a variable :
+[<access specifier>][<modifier>]<datatype><variable_name>;
+Ex: int a;
+
+Acess specifiers -- public,protected,private,internal,file,protected internal,private protected
+Modifiers -- static,abstract,sealed,volatile,virtual,unsafe,etc ,...
+Datatype -- byte,sbyte,short,ushort,int,unit,long,ulong,decimal,float,double,char,bool
+variable_names can begin with char,underscore,followed by digits
+________________________________________________________________________________________________________________________________________________________________
+
+
+
+s<<Shortcuts>>
+ctrl+alt+x -> tools
+ctrl+alt+s -> server explorer
+ctrl+alt+l -> solution explorer
+ctrl+shift+b -> Build
+cw+Tab for console.writeline
+svm+Tab for the main function
+ctrl+space fro suggestions
+F9 -> breakpoints
+F12 -> To check details 
+F10 -> to execute line by line
+ctrl+F5 -> to debug
+ctrl+shift+a -> to create class
+ctor+Tab for cunstructor
+ctrl+A (+) ctrl+K (+) ctrl+F
+ctrl+R(+)ctrl+E -> for geters and seter
+
+
+________________________________________________________________________________________________________________________________________________________________
+
+
+OOAD -- Object Oriented analysis and design(UML)
+visio -- class diagram, sequence, diagram, statemachine diagram
+Types of relationship between classes:
+	>> kind of - inheritance
+	>> has a - composition
+	>> is a - utilization
+	
+Syntax to create a class:[public, internal and file][abstract, static, sealed]
+>>[acess specifier][<modifier>] class <class_name>
+
+>>Abstraction: Provide necessary features to the end-user from the user's perspective.Users can be same class, child class in the same namespace, child classes
+in other namespace, other clases in the same namespaces, other classes in another namespace.
+
+>>One way toinplement abstraction can be implemented using acess specifiers.
+
+>>Array -- Groupof variables of same/different type
+	--It is the collection of elements that belongs to same datatype. 
+	--Arrays always prefer adjacent memory location.
+	--While creating an array we have to mention the size of array which is non-changeable.
+	>Syntax:
+		<Datatype>[]<array_name>=new <Dataype>[size];
+
+>>Base class reference variables can store address of child class objects ***IMPORTANT***
+>>Binding -- Associating a function to a class is called binding. If this binding process is performed during the compilation time is called static binding. 
+If binding process is perfomed during runtime it is called dynamic binding.
+
+________________________________________________________________________________________________________________________________________________________________
+
+Types of Applications that can be developed with .NET
+
+>>Desktop Applications:
+	-Console User Interface(CUI):Used for network relevant operations.
+	-Graphical User Interface(GUI):VLC, Chrome, Teams,..
+>>Web Applications:ASP.Net(technology) is used to develop web apps.
+>>Mobile Applications:
+	-Native Applications
+	-Non-native Applications
+
+________________________________________________________________________________________________________________________________________________________________  5/3/2025
+
+>>Polymorphism: It can be defined as one in many forms. It is of two types:
+	-Static(compile-time):method overloading -- It can be implemented within a single class and have the functions with same function name, same return type but different parameters.
+	-Dynamic(run-time):method overriding(replacing) -- It can be implemented to replace the functionality of parent class implementations in child class. 
+					     -- It will be implemented by functions with same name, same return type and same parameters.
+
+>>Add StartupObjects if there are multiple main classes
+________________________________________________________________________________________________________________________________________________________________
+
+>>Object type Arrays
+
+>>Overriding methods of object class in C# every class will inherit object class
+	-so that we can override methods like ToString(),GetHashCode() and Equals().
+>>Abstraction: It is a process od hiding or skipping the implementations
+	-In c# abstraction can be achieved by using interfaces or abstract classes
+
+>>Abstract Classes: it will support both abstract and non abstract functions.
+	-Abstract functions should be availabe only inside abstract classes.
+	-We cannot create objects for abstract classes.
+	-If any non-abstract class inheriting an abstract class should implement all incomplete functions of parent class.
+
+>>Interfaces: it looks like classes which contain only abstract methods 
+	-it cannot allow to create objects.
+	-the class which is implewmenting interfaces should implement each and every method of implement.
+	-it will be used for loosely coupled architecture.
+	-it will be used as type reference for child class objects.
+	-it will support inheritance.
+	-it will support inheriting more than one interface.
+
+>>Constructor: It is a special type member function which executes automatcally only once in a lifecycle of an object
+	-Constructor name will be similar to class name.
+	-Constructors will never return any value.
+	-Constructor will suport overloading.
+	-when a child class constructor is invoked then its parent class constructor will be triggered automatically.
+
+>>Exception Handling: It is a runtime error occured during execution of the program.
+
+________________________________________________________________________________________________________________________________________________________________  6/3/2025
+
+>>User defined Exception classes: To create User defined Exception classes we have to inherit the root class "Exception" 
+	-In the cunstructor we have to pass the exception message to the base class.
+
+>>Regular Expressions: It is a mathematical notation for handling and validating user inputs.
+	[]-inputs
+	{}-no of inputs
+	^-start character
+	$-end character
+
+>>Datetime Handling: It is a pre-defined class in C#.Net which returns properties from pc, date and time settings.
+	-Extracting current date & time.
+
+>>Timespan: Calculating difference between two dates.
+
+>>String Handling
+
+>>Var and Dynamic reference types
+
+>>Boxing: Converting any datatype to object.
+
+>>Unboxing: Converting back object to datatype of it's original form.
+
+>>File Handling
+
+>>Working with folders and directories.
+
+________________________________________________________________________________________________________________________________________________________________  7/3/2025
+
+>>Collections: It is a framework which is introduced to overcome the drawbacks of arrays.
+	-They are implemented from the root interface. 
+	-There are two types of colloections available
+		>Non-generic collections : These will allow to store multiple datatype values into the collection.
+		--ArrayList
+		--Stack
+		--Queue
+		
+		>Generic collections : They can be also called as templates.These can be classified into three types according to the behaviour
+		--List : it is a collection thatallows duplicates and it can be also be operated with index.
+			->Creating or declaring a list: List<datatype> <list_name> = new List<datatype>();
+				Ex: Employee emp = new Employee()
+				    {id=_______,name=_________,......};
+
+		--Set : It is a collection that allows only unique values. System will maintain a hashing for every element to avoid duplicates.
+			->In C# there are #set and sorted set.
+
+		--Dictionaries : is a dynamic generic collection that stores unique key-value pairs,allowing for efficient lookups and operations
+				 such as adding, accessing, and removing elements.
+
+>>Static KeyWord:In C# static keyword will be used to access the properties of class without creating objects.
+	-Static keyword will be used to save the memory of the variables.
+	-Static variable memory location will be allocated in the runtime.
+	-It is not simmilar to constant
+	-In C# it is accessed using the class name.
+	
+________________________________________________________________________________________________________________________________________________________________  
+
+									***ADO.Net***
+A-ActiveX
+D-Data
+O-Object
+
+>>It is a technology that is used for providing communucation b/w front-end and back-end.
+
+System.Data.SqlClient **         |
+System.Data.OledbClient		 |--->SqlConnection -->SqlReader
+System.Data.OrclClient		 |--->SqlCommand    -->SqlDataAdapter
+System.Data.mysqlClient		 |
+
+System.Data
+|-->DataColumn
+|-->DataRow
+|-->DataTable
+|-->DataSet
+
+Nuget.org
+
+>>Working with DataTable
+
+>>Dataset: It is a collection of DataTables which will be used to store multiple table data for temporary storage.
+
+>>Establishing connection to SQL Server:
+SqlConnection con = new SqlConnection( "Data Source=WIN2019;Initial Catalog=testdb;Integrated Security=true;TrustServerCertificate=true" )
+con.open();
+<Code in between>
+con.close();
+
+Executing SQL Queries in ADO.Net
+>>Creating a table
+>>Inserting into tables.
+>>Updating Tables
+________________________________________________________________________________________________________________________________________________________________  8/3/2025
+
+>>Displaying/retrieving data using ADO.Net : In ADO.Net the data can be retrieved in two approaches
+	-Connected approach : By using the class SqlDataReader we can retrieve data row by row and it requires active database connection till the reader completes fetching the data drom the last row of table.
+
+	-Disconnected approach : For retrieving data in a disconnected approach, we will use a class called SqlDataAdapter. It can able to execute an SQL command and fetch data which can be filled to datatable or dataset.
+
+>>Retrieving scalar values using ADO.Net
+
+>>Garbage Collection: It can be done by .Net runtime and automatically reclaims the memory occupied by objects and variables which are no longer in use.
+	-incase if you want to manually implement garbage collectors we can use the syntax GC.Collector
+	-we can use the interface IDisposable(contains method Dispose()) for implementing unmanaged resources like database connections ad native memory management
+
+>>Multi-dimensional array: Syntax -> <datatype>[,] <variable_name> = new <datatype>[row,col];
+
+>>Jagged arrays:it is a array of arrays. It can contain arrays with different sizes but with same datatype.
+	-Syntax: <datatype>[][] <variable_name> = new int[size][];
+
+
